@@ -4,6 +4,9 @@ set -e # Exit with nonzero exit code if anything fails
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
 
+function doCompile {
+  bundle exec jekyll build
+}
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]; then
@@ -28,7 +31,7 @@ cd ..
 rm -rf out/**/* || exit 0
 
 # Run our compile script
-#doCompile
+doCompile
 
 # Now let's go have some fun with the cloned repo
 cd out
@@ -43,7 +46,7 @@ fi
 
 # Commit the "changes", i.e. the new version.
 # The delta will show diffs between new and old versions.
-git add .
+git add . -A
 git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
