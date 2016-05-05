@@ -7,7 +7,7 @@ gemfile:
   - Gemfile
 
 script: 
-  - bundle exec jekyll build
+  # - bundle exec jekyll build
   # - bundle exec rake test
   - ./deploy.sh
 
