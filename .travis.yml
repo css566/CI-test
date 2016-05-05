@@ -1,9 +1,17 @@
-language: python
-python:
-  - "2.6"
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  
-script: python --version
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.0
+
+gemfile:
+  - Gemfile
+
+script: 
+  - bundle exec jekyll build
+  - bundle exec rake test
+  - ./deploy.sh
+
+env:
+  global:
+    - ENCRYPTION_LABEL: ad8ee3389e55
+    - COMMIT_AUTHOR_EMAIL: gautamk@uw.edu
